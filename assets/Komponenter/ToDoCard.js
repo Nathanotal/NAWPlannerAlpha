@@ -10,6 +10,9 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import col from "../colors";
+import { Dimensions } from "react-native";
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 // Had to use Scrollview instead of Flatlist because of render issue relating to programming a Flatlist inside another Flatlist. This is not good for performance but there should not be that much data in one checklist so in practice it should not be a problem.
 
@@ -41,7 +44,6 @@ function toDoCard({ info }) {
         </View>
       ) : (
         <View style={styles.subCard}>
-          <Text style={styles.title}>{dynamicInfo.title}</Text>
           <View style={styles.subSubCard}>
             <ScrollView
               showsHorizontalScrollIndicator={false}
@@ -51,6 +53,7 @@ function toDoCard({ info }) {
                 borderRadius: 20,
               }}
             >
+              <Text style={styles.title}>{dynamicInfo.title}</Text>
               {/* For some reason react does not like this to be separated into another compnent */}
               {dynamicInfo.subTasks.map((data, index) => (
                 <View key={data.id} style={styles.item}>
@@ -62,9 +65,9 @@ function toDoCard({ info }) {
                     }
                   >
                     {data.completed ? (
-                      <Feather name="check-square" size={20} />
+                      <Feather name="check-square" size={30} />
                     ) : (
-                      <Feather name="square" size={20} />
+                      <Feather name="square" size={30} />
                     )}
                   </TouchableOpacity>
                 </View>
@@ -79,42 +82,42 @@ function toDoCard({ info }) {
 
 const styles = StyleSheet.create({
   card: {
-    height: 250, // Temporary, this should be %-based
-    width: 250,
+    marginTop: 10,
+    height: windowHeight - 300,
+    width: windowWidth - 100,
     alignItems: "center",
     justifyContent: "center",
-    //alignContent: "center",
     borderRadius: 25,
     margin: 10,
     marginBottom: 0,
   },
   title: {
     fontWeight: "600",
-    fontSize: 16,
+    fontSize: 28,
+    marginBottom: 20,
     marginTop: 10,
   },
   subCard: {
-    height: 225, // Temporary, this should be based on flex
-    width: 225,
+    height: windowHeight - 320, // Temporary, this should be based on flex
+    width: windowWidth - 125,
     borderRadius: 20,
     backgroundColor: col.white,
     alignItems: "center",
     overflow: "hidden",
   },
   subSubCard: {
-    // height: 160, // Temporary, this should be based on flex
-    // width: 180,
     flex: 1,
     borderRadius: 20,
-    //backgroundColor: "lightgray",
+    //backgroundColor: "lightgray",  // debug
     alignItems: "center",
   },
   smallTitle: {
     fontWeight: "600",
+    fontSize: 20,
   },
   item: {
-    width: 200,
-    //backgroundColor: "lightgreen",
+    width: windowWidth - 175,
+    //backgroundColor: "lightgreen", // debug
     flexDirection: "row",
     justifyContent: "space-between",
   },

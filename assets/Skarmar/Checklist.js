@@ -8,15 +8,33 @@ import ToDoCard from "../Komponenter/ToDoCard";
 function Checklist(props) {
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
-      <Text style={{ fontWeight: "600", fontSize: 26, marginTop: 10 }}>
+      <Text
+        style={{
+          fontWeight: "600",
+          fontSize: 40,
+          marginTop: 40,
+          marginBottom: 30,
+        }}
+      >
         Checklist
       </Text>
       <FlatList
+        horizontal
         showsHorizontalScrollIndicator={false}
         data={checkData.tasks}
         renderItem={({ item }) => <ToDoCard info={item}></ToDoCard>}
         keyExtractor={(item) => item.id}
       />
+      <Text
+        style={{
+          fontWeight: "600",
+          fontSize: 40,
+          marginTop: 10,
+          marginBottom: 15,
+        }}
+      >
+        23 % Klart
+      </Text>
     </View>
   );
 }

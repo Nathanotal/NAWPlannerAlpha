@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Connect Alpha to backend
+- Reimplement Login
+- Reimplement local storage
+- Reimplement a lot of other functions that are currently in place in Pre-alpha
+- Reimplement "Back"-screen component
+- Implement calendar
+- Implement Scoreboard
+- Implement chat
+- Refractor Form component
+- Implement homescreen animation
+- And so much more...
+
 ## [0.1.1] - 2021-03-29
 
 ### Added

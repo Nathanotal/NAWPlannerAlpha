@@ -1,0 +1,84 @@
+{
+  "tasks": [
+    {
+      "title": "Gör checklista",
+      "completed": false,
+      "col": "green",
+      "id": "qwer",
+      "subTasks": [
+        {
+          "title": "Lägg upp",
+          "completed": false,
+          "id": "rewq"
+        },
+        {
+          "title": "Fixa lite mer",
+          "completed": false,
+          "col": "yellow",
+          "id": "asdf"
+        },
+        {
+          "title": "Fixa ännu mer",
+          "completed": false,
+          "id": "fdsa"
+        },
+        {
+          "title": "Flex",
+          "completed": false,
+          "id": "fd3sa3"
+        },
+        {
+          "title": "Scroll",
+          "completed": false,
+          "id": "fd4sa3"
+        },
+        {
+          "title": "Add",
+          "completed": false,
+          "id": "fd5sa3"
+        },
+        {
+          "title": "Sätt max",
+          "completed": false,
+          "id": "fdafafsdsarrr"
+        }
+      ]
+    },
+    {
+      "title": "Gör Hemskärm",
+      "completed": false,
+      "col": "orange",
+      "id": "zxcv",
+      "subTasks": [
+        {
+          "title": "Lägg upp",
+          "completed": false,
+          "id": "vcxz"
+        },
+        {
+          "title": "Fixa lite mer",
+          "completed": false,
+          "id": "xcvb"
+        }
+      ]
+    },
+    {
+      "title": "Gör Profil",
+      "completed": false,
+      "col": "purple",
+      "id": "bvcx",
+      "subTasks": [
+        {
+          "title": "Lägg upp",
+          "completed": false,
+          "id": "fghj"
+        },
+        {
+          "title": "Fixa lite mer",
+          "completed": false,
+          "id": "jhgf"
+        }
+      ]
+    }
+  ]
+}

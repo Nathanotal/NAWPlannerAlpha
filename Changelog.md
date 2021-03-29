@@ -7,7 +7,8 @@ All notable changes to this project will be documented in this file.
  
 ### Added
 - Readme with better explanation than in pre alpha.
-- Changelog to help track my changes
+- Initialized blank expo app
+- Changelog to help track changes
  
 ### Changed
  

@@ -17,7 +17,7 @@ function profil(f, s) {
 }
 
 // Bastemplate för skärm
-function Skarm({ children, style, k1F, k2F, k3F }) {
+function Skarm({ children, style, k1F, k2F, k3F, showTab }) {
   const [col, setCol] = useState({
     hem: colours.primary,
     check: colours.black,
@@ -26,23 +26,28 @@ function Skarm({ children, style, k1F, k2F, k3F }) {
   return (
     <SafeAreaView style={[styles.huvud, style]}>
       <View style={{ flex: 1 }}>{children}</View>
-      <View style={styles.bottenRad}>
-        <TouchableOpacity style={styles.knapp} onPress={() => hem(k1F, setCol)}>
-          <Feather name="home" size={50} color={col.hem} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.knapp}
-          onPress={() => checkList(k2F, setCol)}
-        >
-          <Feather name="check-square" size={50} color={col.check} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.knapp}
-          onPress={() => profil(k3F, setCol)}
-        >
-          <Feather name="user" size={50} color={col.profil} />
-        </TouchableOpacity>
-      </View>
+      {showTab && (
+        <View style={styles.bottenRad}>
+          <TouchableOpacity
+            style={styles.knapp}
+            onPress={() => hem(k1F, setCol)}
+          >
+            <Feather name="home" size={50} color={col.hem} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.knapp}
+            onPress={() => checkList(k2F, setCol)}
+          >
+            <Feather name="check-square" size={50} color={col.check} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.knapp}
+            onPress={() => profil(k3F, setCol)}
+          >
+            <Feather name="user" size={50} color={col.profil} />
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 }

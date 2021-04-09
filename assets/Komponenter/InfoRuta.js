@@ -30,6 +30,7 @@ function InfoRuta({ size, onPress, text }) {
   );
 }
 
+// This should be remade to flex, low priority.
 const styles = StyleSheet.create({
   rutaBas: {
     alignSelf: "flex-start",

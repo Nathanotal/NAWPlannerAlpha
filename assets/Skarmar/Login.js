@@ -5,7 +5,7 @@ import colors from "../colors";
 import Formfield from "../Komponenter/Formfield";
 import MyForm from "../Komponenter/MyForm";
 import * as Yup from "yup";
-import firebase from "firebase/app";
+import firebase from "../../firebase";
 
 const validate = Yup.object().shape({
   Email: Yup.string().required().email().label("Email"),
@@ -19,8 +19,9 @@ function handleLogin(values) {
 // Fix how values are handled!
 function Login({ navigation }) {
   const [isLoading, setLoadStatus] = useState(true); // Fix this later!
+  const [users, setUsers] = useState([]);
 
-  useState(() => {
+  useEffect(() => {
     if (isLoading) {
       // Check if there is a local login stored:
       if (false) {

@@ -8,6 +8,7 @@ import Checklist from "./assets/Skarmar/Checklist";
 import Profil from "./assets/Skarmar/Profil";
 import Login from "./assets/Skarmar/Login";
 import { useState } from "react";
+import firebase from "./firebase"
 
 // Initialize
 const Stack = createBottomTabNavigator();

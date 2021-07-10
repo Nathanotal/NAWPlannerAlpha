@@ -15,6 +15,7 @@ const validate = Yup.object().shape({
 
 // Fix how values are handled!
 function Login({ navigation }) {
+  // TODO: Implement session handling
   const [isLoading, setLoadStatus] = useState(true); // Fix this later!
 
   function handleLogin(values) {

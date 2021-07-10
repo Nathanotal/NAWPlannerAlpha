@@ -7,12 +7,12 @@ import MyForm from "../Komponenter/MyForm";
 import * as Yup from "yup";
 import firebase from "../../firebase";
 
+// Implement extra password field and check that they are equal
 const validate = Yup.object().shape({
   Email: Yup.string().required().email().label("Email"),
   Password: Yup.string().required().label("Password"),
 });
 
-// Fix how values are handled!
 function Register({ navigation }) {
   const [isLoading, setLoadStatus] = useState(true); // Fix this later!
 

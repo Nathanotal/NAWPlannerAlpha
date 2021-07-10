@@ -22,13 +22,9 @@ function nav(n, place) {
   n.current?.navigate(place);
 }
 
-// TODO: fix
-let loggedIn = false;
-
 // I will probably have to refractor the tabbar correctly with something like this: https://stackoverflow.com/questions/60177053/react-navigation-5-hide-tab-bar-from-stack-navigator
 export default function App() {
   const navRef = React.useRef(null);
-  const [isLoggedin, setLoginStatus] = useState(loggedIn); // Iterate, make better solution
   const [showTab, setTab] = useState(false);
   return (
     <Auth>

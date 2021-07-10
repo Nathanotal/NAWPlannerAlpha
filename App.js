@@ -12,17 +12,20 @@ import firebase from "./firebase";
 import Auth from "./assets/auth/auth";
 import Register from "./assets/auth/Register";
 import CreateUser from "./assets/Skarmar/CreateUser";
+import { createStackNavigator } from "@react-navigation/stack";
 
 // Initialize
-const Stack = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 // Navigation handler
 function nav(n, place) {
   n.current?.navigate(place);
 }
 
+// TODO: fix
 let loggedIn = false;
 
+// I will probably have to refractor the tabbar correctly with something like this: https://stackoverflow.com/questions/60177053/react-navigation-5-hide-tab-bar-from-stack-navigator
 export default function App() {
   const navRef = React.useRef(null);
   const [isLoggedin, setLoginStatus] = useState(loggedIn); // Iterate, make better solution
@@ -38,7 +41,8 @@ export default function App() {
         <NavigationContainer ref={navRef}>
           <Stack.Navigator
             initialRouteName={"Login"}
-            screenOptions={{ tabBarVisible: false }}
+            // screenOptions={{ tabBarVisible: false }}
+            headerMode="none"
           >
             <Stack.Screen name="Hem" component={Hem} />
             <Stack.Screen name="Checklist" component={Checklist} />

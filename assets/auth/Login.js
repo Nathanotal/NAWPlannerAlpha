@@ -12,14 +12,34 @@ const validate = Yup.object().shape({
   Password: Yup.string().required().label("Password"),
 });
 
-function handleLogin(values) {
-  console.log("Logga in");
-}
-
 // Fix how values are handled!
 function Login({ navigation }) {
   const [isLoading, setLoadStatus] = useState(true); // Fix this later!
-  const [users, setUsers] = useState([]);
+
+  function handleLogin(values) {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(values.Email, values.Password)
+      .then(() => {
+        console.log("Logged in");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  // This should not be implemented here but is coded for reference (MOVE THIS)
+  function logOut() {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        console.log("Signed out");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   useEffect(() => {
     if (isLoading) {
@@ -36,6 +56,7 @@ function Login({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <h1>Login</h1>
       <MyForm
         initialValues={{ Email: null, Password: null }}
         onSubmit={(values) => handleLogin(values)}

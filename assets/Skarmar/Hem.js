@@ -2,9 +2,14 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import InfoRuta from "../Komponenter/InfoRuta";
 
+// This way you can use the context!
+// import { AuthC } from "../auth/auth";
+// import { useContext } from "react";
+
 function placeHolder() {}
 
 function Hem(props) {
+  // const {user} = useContext(AuthC);
   return (
     <View style={styles.container}>
       <ScrollView

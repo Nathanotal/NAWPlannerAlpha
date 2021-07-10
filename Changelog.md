@@ -4,17 +4,41 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- Connect Alpha to backend
-- Reimplement Login
 - Reimplement local storage
 - Reimplement a lot of other functions that are currently in place in Pre-alpha
-- Reimplement "Back"-screen component
 - Implement calendar
 - Implement Scoreboard
 - Implement chat
 - Refractor Form component
 - Implement homescreen animation
-- And so much more...
+- And more...
+
+## [0.2.1] - 2021-03-29
+
+### Added
+
+- Implemented animations
+- Implemented loading screen
+- Implemented backbutton
+- Implemented login functionality
+- Implemented register functionality
+- Implemented create user functionality
+- Implemented database-hadnling functionality
+- Implemented numerous new screens and componentes
+- Connected to backend sufficiently
+- Added more documentation
+- Firebase Implementation
+- Created Firebase Schemas
+- Setup key handling (not entirely fixed)
+
+### Changed
+
+- Improved routing visuals
+- General improvements
+
+### Fixed
+
+- General fixes
 
 ## [0.1.1] - 2021-03-29
 

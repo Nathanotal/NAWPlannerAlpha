@@ -8,4 +8,5 @@ export default colors = {
   black: "black",
   red: "#ff4d4d",
   passive: "#F5F5F5",
+  gray: "#808080",
 };

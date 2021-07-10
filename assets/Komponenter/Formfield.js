@@ -6,7 +6,7 @@ import Input from "./Input";
 function Formfield({ name, ...otherProps }) {
   const { setFieldTouched, handleChange, errors, touched } = useFormikContext();
   return (
-    <View>
+    <View style={styles.cont}>
       <Input
         onBlur={() => setFieldTouched(name)}
         onChangeText={handleChange(name)}
@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
   feltext: {
     color: "red",
     fontWeight: "600",
+  },
+  cont: {
+    flex: 1,
+    // marginBottom: 75,
+    alignItems: "center",
   },
 });
 

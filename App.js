@@ -1,14 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Skarm from "./assets/Skarmar/Skarm";
 import Hem from "./assets/Skarmar/Hem";
 import Checklist from "./assets/Skarmar/Checklist";
 import Profil from "./assets/Skarmar/Profil";
 import Login from "./assets/Auth/Login";
 import { useState } from "react";
-import firebase from "./firebase";
 import Auth from "./assets/auth/auth";
 import Register from "./assets/auth/Register";
 import CreateUser from "./assets/Skarmar/CreateUser";

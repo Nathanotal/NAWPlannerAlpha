@@ -13,6 +13,7 @@ function Hem(props) {
   return (
     <View style={styles.container}>
       <ScrollView
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           marginTop: 10,
         }}

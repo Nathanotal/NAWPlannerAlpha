@@ -4,7 +4,7 @@ import colors from "../colors";
 
 function Input({ ...otherProps }) {
   return (
-    <View style={[styles.input]}>
+    <View style={[styles.input, otherProps]}>
       <TextInput style={styles.text} {...otherProps}></TextInput>
     </View>
   );

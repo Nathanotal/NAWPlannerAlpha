@@ -6,6 +6,9 @@ import Formfield from "../Komponenter/Formfield";
 import MyForm from "../Komponenter/MyForm";
 import * as Yup from "yup";
 import firebase from "../../firebase";
+import Loading from "../Skarmar/Loading";
+import Knapp from "../Komponenter/Knapp";
+import BackButton from "../Komponenter/BackButton";
 
 // Implement extra password field and check that they are equal
 const validate = Yup.object().shape({
@@ -14,22 +17,10 @@ const validate = Yup.object().shape({
 });
 
 function Register({ navigation }) {
-  const [isLoading, setLoadStatus] = useState(true); // Fix this later!
-
-  useEffect(() => {
-    if (isLoading) {
-      // Check if there is a local login stored:
-      if (false) {
-        // If so initialize firebase and login
-        const auth = firebase.auth();
-      } else {
-        // Else show login/signup screen
-        setLoadStatus(false);
-      }
-    }
-  });
+  const [isLoading, setLoadStatus] = useState(false);
 
   function handleRegister(values) {
+    setLoadStatus(true);
     firebase
       .auth()
       .createUserWithEmailAndPassword(values.Email, values.Password)
@@ -38,35 +29,51 @@ function Register({ navigation }) {
         navigation.navigate("CreateUser");
       })
       .catch((e) => {
+        // Implement error message
         console.log(e);
+        setLoadStatus(false);
       });
+  }
+
+  function back() {
+    navigation.navigate("Login");
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <h1>Register</h1>
-      <MyForm
-        initialValues={{ Email: "", Password: "" }}
-        onSubmit={(values) => handleRegister(values)}
-        validationSchema={validate}
-      >
-        <Formfield
-          name="Email"
-          placeholder="Email"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          autoCorrect={false}
-          textContentType="emailAddress"
-        />
-        <Formfield
-          name="Password"
-          placeholder="Password"
-          autoCapitalize="none"
-          autoCorrect={false}
-          secureTextEntry
-          textContentType="password"
-        />
-      </MyForm>
+      {isLoading ? (
+        <Loading namn="Registering..."></Loading>
+      ) : (
+        <View style={styles.loginForm}>
+          <BackButton funk={back}></BackButton>
+          <Text style={styles.header}>Register</Text>
+          <MyForm
+            initialValues={{ Email: "", Password: "" }}
+            onSubmit={(values) => handleRegister(values)}
+            validationSchema={validate}
+            buttonName={"Register"}
+          >
+            <Formfield
+              name="Email"
+              placeholder="Email"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              autoCorrect={false}
+              textContentType="emailAddress"
+            />
+            <Formfield
+              name="Password"
+              placeholder="Password"
+              autoCapitalize="none"
+              autoCorrect={false}
+              secureTextEntry
+              textContentType="password"
+            />
+          </MyForm>
+          <View style={styles.buffer}></View>
+          <View style={styles.register}></View>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -75,6 +82,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+  },
+  loginForm: {
+    display: "flex",
+    alignItems: "center",
+    alignContent: "flex-start",
+    flex: 2,
+    width: "90%",
+    maxWidth: 800,
+    alignSelf: "center",
+  },
+  buffer: {
+    flex: 1,
+  },
+  header: {
+    fontSize: 30,
+    fontWeight: "bold",
+    margin: 50,
+  },
+  register: {
+    flex: 0.5,
+    width: "100%",
+    alignItems: "center",
+  },
+  registerText: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: colors.gray,
+    paddingBottom: 10,
   },
 });
 

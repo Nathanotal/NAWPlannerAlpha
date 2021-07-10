@@ -1,0 +1,12 @@
+{
+  "keys" : {
+"APP_FIREBASE_KEY": "AIzaSyDX891KS4Zqh3EFzUL0GEzxYiVmgIeKniM",
+"APP_FIREBASE_DOMAIN" :  "nawplanneralpha.firebaseapp.com",
+"APP_FIREBASE_DATABASE" :  "https://nawplanneralpha-default-rtdb.europe-west1.firebasedatabase.app",
+"APP_FIREBASE_PROJECTID" :  "nawplanneralpha",
+"APP_FIREBASE_STORAGE_BUCKET" :  "nawplanneralpha.appspot.com",
+"APP_FIREBASE_SENDER_ID" :  "470184608635",
+"APP_FIREBASE_APP_ID" :  "1:470184608635:web:42b038550257ad546633de",
+"APP_FIREBASE_MEASUREMENT_ID" :  "G-3H9L2SQ6X8"
+}
+}

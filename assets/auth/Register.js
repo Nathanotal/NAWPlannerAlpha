@@ -35,6 +35,7 @@ function Register({ navigation }) {
       .createUserWithEmailAndPassword(values.Email, values.Password)
       .then(() => {
         console.log("Registered user");
+        navigation.navigate("CreateUser");
       })
       .catch((e) => {
         console.log(e);
@@ -45,7 +46,7 @@ function Register({ navigation }) {
     <SafeAreaView style={styles.container}>
       <h1>Register</h1>
       <MyForm
-        initialValues={{ Email: null, Password: null }}
+        initialValues={{ Email: "", Password: "" }}
         onSubmit={(values) => handleRegister(values)}
         validationSchema={validate}
       >

@@ -6,6 +6,7 @@ import Formfield from "../Komponenter/Formfield";
 import MyForm from "../Komponenter/MyForm";
 import * as Yup from "yup";
 import firebase from "../../firebase";
+import Knapp from "../Komponenter/Knapp";
 
 const validate = Yup.object().shape({
   Email: Yup.string().required().email().label("Email"),
@@ -22,6 +23,7 @@ function Login({ navigation }) {
       .signInWithEmailAndPassword(values.Email, values.Password)
       .then(() => {
         console.log("Logged in");
+        navigation.navigate("Hem");
       })
       .catch((e) => {
         console.log(e);
@@ -41,6 +43,10 @@ function Login({ navigation }) {
       });
   }
 
+  function goToReg() {
+    navigation.navigate("Register");
+  }
+
   useEffect(() => {
     if (isLoading) {
       // Check if there is a local login stored:
@@ -58,7 +64,7 @@ function Login({ navigation }) {
     <SafeAreaView style={styles.container}>
       <h1>Login</h1>
       <MyForm
-        initialValues={{ Email: null, Password: null }}
+        initialValues={{ Email: "", Password: "" }}
         onSubmit={(values) => handleLogin(values)}
         validationSchema={validate}
       >
@@ -79,6 +85,7 @@ function Login({ navigation }) {
           textContentType="password"
         />
       </MyForm>
+      <Knapp namn="Register" onPress={goToReg}></Knapp>
     </SafeAreaView>
   );
 }

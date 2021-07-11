@@ -12,6 +12,7 @@ import Register from "./assets/auth/Register";
 import CreateUser from "./assets/Skarmar/CreateUser";
 import { createStackNavigator } from "@react-navigation/stack";
 import EnterPoints from "./assets/Skarmar/EnterPoints";
+import Scoreboard from "./assets/Skarmar/Scoreboard";
 
 // Initialize
 const Stack = createStackNavigator();
@@ -35,7 +36,7 @@ export default function App() {
       >
         <NavigationContainer ref={navRef}>
           <Stack.Navigator
-            initialRouteName={"Login"}
+            initialRouteName={"Scoreboard"}
             // screenOptions={{ tabBarVisible: false }}
             headerMode="none"
           >
@@ -44,6 +45,7 @@ export default function App() {
             <Stack.Screen name="Profil" component={Profil} />
             <Stack.Screen name="Login" component={Login} navigation={navRef} />
             <Stack.Screen name="EnterPoints" component={EnterPoints} />
+            <Stack.Screen name="Scoreboard" component={Scoreboard} />
             <Stack.Screen
               name="CreateUser"
               component={CreateUser}

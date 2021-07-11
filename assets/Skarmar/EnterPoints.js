@@ -25,6 +25,7 @@ const validate = Yup.object().shape({
   Password: Yup.string().required().label("Password"),
 });
 
+// Extremely messy because of Flatlist. Note: Never use Flatlist for complex functionality
 function EnterPoints(props) {
   const ref = firebase.firestore().collection("challenges");
   const ref2 = firebase.firestore().collection("users");
@@ -59,7 +60,6 @@ function EnterPoints(props) {
     );
   }
 
-  // TODO: fix item.isSelected (checkbox)
   // Beacuse of Babel logic and compile we cannot use <Text> here, reverting to HTML <p>
   function ChallengeItem({ item }) {
     return (

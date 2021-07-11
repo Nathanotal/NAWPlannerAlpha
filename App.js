@@ -35,11 +35,11 @@ export default function App() {
       >
         <NavigationContainer ref={navRef}>
           <Stack.Navigator
-            initialRouteName={"EnterPoints"}
+            initialRouteName={"Login"}
             // screenOptions={{ tabBarVisible: false }}
             headerMode="none"
           >
-            <Stack.Screen name="Hem" component={Hem} />
+            <Stack.Screen name="Hem" component={Hem} navigation={navRef} />
             <Stack.Screen name="Checklist" component={Checklist} />
             <Stack.Screen name="Profil" component={Profil} />
             <Stack.Screen name="Login" component={Login} navigation={navRef} />

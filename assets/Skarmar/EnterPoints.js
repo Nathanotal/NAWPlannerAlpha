@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableWithoutFeedback,
   TouchableHighlight,
+  TouchableOpacity,
 } from "react-native";
 import * as Yup from "yup";
 import firebase from "../../firebase";
@@ -15,6 +16,9 @@ import colors from "../colors";
 import Loading from "../Skarmar/Loading";
 import Collapsible from "react-native-collapsible";
 import { Feather } from "expo-vector-icons";
+import ChallengeDesc from "../Komponenter/ChallengeDesc";
+import { useContext } from "react";
+import { AuthC } from "../auth/auth";
 
 const validate = Yup.object().shape({
   Email: Yup.string().required().email().label("Email"),
@@ -23,9 +27,25 @@ const validate = Yup.object().shape({
 
 function EnterPoints(props) {
   const ref = firebase.firestore().collection("challenges");
+  const ref2 = firebase.firestore().collection("users");
   const [challenges, setChallenges] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [wtf, wtfl] = useState(0); // Workaround since flatlist is badly implemented
+  const { user } = useContext(AuthC);
+  const [userData, setUserData] = useState(null);
+
+  // This is not a fantastic implementation
+  useEffect(() => {
+    getUser();
+    getChallenges();
+  }, []);
+
+  async function getUser() {
+    const userRef = ref2.doc(user.uid);
+    userRef.get().then((doc) => {
+      setUserData(doc.data());
+    });
+  }
 
   function sep() {
     return (
@@ -51,7 +71,7 @@ function EnterPoints(props) {
         >
           <View style={styles.challengeContainer}>
             <Text style={styles.challengeTitle}>{item.title}</Text>
-            {!item.isSelected ? (
+            {!userData.completed.includes(item.id) ? (
               <Feather name="square" style={styles.challengeCheck}></Feather>
             ) : (
               <Feather
@@ -62,17 +82,41 @@ function EnterPoints(props) {
           </View>
         </TouchableHighlight>
         <Collapsible collapsed={!item.isSelected}>
-          <View style={styles.collapseContainer}>
-            <Text style={styles.challengeDesc}>{item.desc}</Text>
-          </View>
+          <ChallengeDesc
+            item={item}
+            userData={userData}
+            challengeCompleted={challengeCompleted}
+          ></ChallengeDesc>
         </Collapsible>
       </>
     );
   }
 
-  useEffect(() => {
-    getChallenges();
-  }, []);
+  function challengeCompleted(id) {
+    getUser().then(() => {
+      if (userData.completed.includes(id)) {
+        ref2
+          .doc(user.uid)
+          .update({ completed: firebase.firestore.FieldValue.arrayRemove(id) })
+          .then(console.log("check off"))
+          .catch((e) => {
+            console.log(e);
+            // setErrorStatus(true);
+            // setLoadStatus(false);
+          });
+      } else {
+        ref2
+          .doc(user.uid)
+          .update({ completed: firebase.firestore.FieldValue.arrayUnion(id) })
+          .then(console.log("check"))
+          .catch((e) => {
+            console.log(e);
+            // setErrorStatus(true);
+            // setLoadStatus(false);
+          });
+      }
+    });
+  }
 
   function changeChallenges(item) {
     item.isSelected = !item.isSelected;
@@ -109,7 +153,7 @@ function EnterPoints(props) {
         <Loading namn="Loading..."></Loading>
       ) : (
         <View style={styles.container2}>
-          <Text style={styles.titel}>Enter points</Text>
+          <Text style={styles.titel}>Challenges</Text>
           <FlatList
             showsHorizontalScrollIndicator={false}
             style={styles.list}
@@ -135,6 +179,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    backgroundColor: colors.passive,
     // alignItems: "center",
   },
   container2: {
@@ -158,17 +203,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
-  },
-  collapseContainer: {
-    height: 200,
-    width: "100%",
-    backgroundColor: colors.passive, // temporary
-  },
-  challengeDesc: {
-    fontWeight: "600",
-    fontSize: 14,
-    paddingLeft: 20,
-    paddingTop: 20,
   },
   challengeTitle: {
     fontWeight: "600",

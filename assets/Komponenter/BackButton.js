@@ -7,7 +7,7 @@ function BackButton({ funk }) {
   return (
     <View style={styles.buttonContainer}>
       <TouchableOpacity style={styles.knapp} onPress={funk}>
-        <Feather name="arrow-left" size={30} />
+        <Feather name="arrow-right" size={30} />
       </TouchableOpacity>
     </View>
   );

@@ -8,8 +8,11 @@ import InfoRuta from "../Komponenter/InfoRuta";
 
 function placeHolder() {}
 
-function Hem(props) {
+function Hem({ navigation }) {
   // const {user} = useContext(AuthC);
+  function kalender() {
+    navigation.navigate("EnterPoints");
+  }
   return (
     <View style={styles.container}>
       <ScrollView
@@ -21,7 +24,7 @@ function Hem(props) {
         <Text style={styles.titel}>Hem</Text>
         <View style={{ flex: 1 }}>
           <View style={styles.info}>
-            <InfoRuta onPress={placeHolder} text="Kalender"></InfoRuta>
+            <InfoRuta onPress={kalender} text="Kalender"></InfoRuta>
             <InfoRuta onPress={placeHolder} text="Notiser"></InfoRuta>
           </View>
           <InfoRuta

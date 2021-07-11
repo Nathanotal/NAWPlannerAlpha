@@ -17,7 +17,8 @@ const validate = Yup.object().shape({
 // Fix how values are handled!
 function Login({ navigation }) {
   // TODO: Implement session handling
-  const [isLoading, setLoadStatus] = useState(false); // Fix this later!
+  const [isLoading, setLoadStatus] = useState(false);
+  const [isError, setErrorStatus] = useState(false);
 
   function handleLogin(values) {
     setLoadStatus(true);
@@ -31,6 +32,7 @@ function Login({ navigation }) {
       .catch((e) => {
         // Fix visible error message
         console.log(e);
+        setErrorStatus(true);
         setLoadStatus(false);
       });
   }
@@ -96,6 +98,7 @@ function Login({ navigation }) {
               textContentType="password"
             />
           </MyForm>
+          {isError && <Text style={styles.feltext}>Something went wrong</Text>}
           <View style={styles.buffer}></View>
           <View style={styles.register}>
             <Text style={styles.registerText}>No account?</Text>
@@ -139,6 +142,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.gray,
     paddingBottom: 10,
+  },
+  feltext: {
+    color: "red",
+    fontWeight: "600",
   },
 });
 

@@ -18,6 +18,7 @@ const validate = Yup.object().shape({
 
 function Register({ navigation }) {
   const [isLoading, setLoadStatus] = useState(false);
+  const [isError, setErrorStatus] = useState(false);
 
   function handleRegister(values) {
     setLoadStatus(true);
@@ -31,6 +32,7 @@ function Register({ navigation }) {
       .catch((e) => {
         // Implement error message
         console.log(e);
+        setErrorStatus(true);
         setLoadStatus(false);
       });
   }
@@ -70,6 +72,7 @@ function Register({ navigation }) {
               textContentType="password"
             />
           </MyForm>
+          {isError && <Text style={styles.feltext}>Something went wrong</Text>}
           <View style={styles.buffer}></View>
           <View style={styles.register}></View>
         </View>
@@ -110,6 +113,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.gray,
     paddingBottom: 10,
+  },
+  feltext: {
+    color: "red",
+    fontWeight: "600",
   },
 });
 

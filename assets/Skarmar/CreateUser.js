@@ -21,6 +21,7 @@ function CreateUser({ navigation }) {
   const [isLoading, setLoadStatus] = useState(false);
   const { user } = useContext(AuthC);
   const ref = firebase.firestore().collection("users");
+  const [isError, setErrorStatus] = useState(false);
 
   function handleCreate(values) {
     setLoadStatus(true);
@@ -45,6 +46,7 @@ function CreateUser({ navigation }) {
       .then(navigation.navigate("Hem"))
       .catch((e) => {
         console.log(e);
+        setErrorStatus(true);
         setLoadStatus(false);
       });
   }
@@ -82,6 +84,7 @@ function CreateUser({ navigation }) {
               textContentType="none"
             />
           </MyForm>
+          {isError && <Text style={styles.feltext}>Something went wrong</Text>}
           <View style={styles.buffer}></View>
           <View style={styles.register}></View>
         </View>
@@ -122,6 +125,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.gray,
     paddingBottom: 10,
+  },
+  feltext: {
+    color: "red",
+    fontWeight: "600",
   },
 });
 

@@ -4,10 +4,9 @@ import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import colors from "../colors";
 import firebase from "../../firebase";
 
-
 // Fix how values are handled!
 function Userslist({ navigation }) {
-  const [isLoading, setLoadStatus] = useState(true); // Fix this later!
+  // This component is not used
   const [users, setUsers] = useState([]);
   const ref = firebase.firestore().collection("users");
 
@@ -18,11 +17,11 @@ function Userslist({ navigation }) {
   function getUsers() {
     ref.onSnapshot((querySnapshot) => {
       const items = [];
-      querySnapshot.forEach((doc)=> {
+      querySnapshot.forEach((doc) => {
         items.push(doc.data());
       });
-      setUsers(items)
-    })
+      setUsers(items);
+    });
   }
 
   return (

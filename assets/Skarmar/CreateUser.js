@@ -7,7 +7,6 @@ import * as Yup from "yup";
 import firebase from "../../firebase";
 import { AuthC } from "../auth/auth";
 import { useContext, useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import Loading from "./Loading";
 import BackButton from "../Komponenter/BackButton";
 
@@ -25,10 +24,15 @@ function CreateUser({ navigation }) {
 
   function handleCreate(values) {
     setLoadStatus(true);
+    let id;
 
-    // TODO: Fix birthday, id and wins
-    const id = uuidv4();
+    try {
+      id = user.uid;
+    } catch (e) {
+      console.log(e, "Something went wrong when getting user details");
+    }
 
+    // TODO: Fix birthday and wins
     const newUser = {
       name: values.Name,
       desc: values.Desc,

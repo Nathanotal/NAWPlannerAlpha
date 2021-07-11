@@ -11,9 +11,26 @@ All notable changes to this project will be documented in this file.
 - Implement chat
 - Refractor Form component
 - Implement homescreen animation
+- Offline completed-functionality
 - And more...
 
-## [0.2.1] - 2021-03-29
+## [0.2.2] - 2021-07-11
+
+### Added
+
+- Implemented better ID-hadnling
+- Implemented some error messages
+- Added challenge page
+- Animated challenge page
+- Implemented db-connection-logic in challenge component
+
+### Changed
+
+- Improved visuals
+
+### Fixed
+
+## [0.2.1] - 2021-07-10
 
 ### Added
 

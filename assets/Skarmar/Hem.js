@@ -13,6 +13,9 @@ function Hem({ navigation }) {
   function kalender() {
     navigation.navigate("EnterPoints");
   }
+  function notiser() {
+    navigation.navigate("Scoreboard");
+  }
   return (
     <View style={styles.container}>
       <ScrollView
@@ -25,7 +28,7 @@ function Hem({ navigation }) {
         <View style={{ flex: 1 }}>
           <View style={styles.info}>
             <InfoRuta onPress={kalender} text="Kalender"></InfoRuta>
-            <InfoRuta onPress={placeHolder} text="Notiser"></InfoRuta>
+            <InfoRuta onPress={notiser} text="Notiser"></InfoRuta>
           </View>
           <InfoRuta
             size="bred"

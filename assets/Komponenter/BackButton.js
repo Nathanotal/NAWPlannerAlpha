@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     height: 50,
     width: 50,
-    backgroundColor: colors.white,
+    backgroundColor: colors.passive,
     position: "fixed",
     top: 15,
     left: 15,

@@ -5,14 +5,23 @@ import firebase from "../../firebase";
 import { useEffect } from "react";
 import { useState } from "react";
 import Loading from "./Loading";
+import BackButton from "../Komponenter/BackButton";
 
-function Scoreboard(props) {
+function Scoreboard({ navigation }) {
   const [isLoading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [challenges, setChallenges] = useState([]);
   const ref = firebase.firestore().collection("users");
   const refChallenge = firebase.firestore().collection("challenges");
   const [namePointList, setNamePointList] = useState([]);
+  const col = {
+    1: colors.first,
+    2: colors.second,
+    3: colors.third,
+    4: colors.fourth,
+    5: colors.fifth,
+    6: colors.sixth,
+  };
 
   // Semi good solution
   useEffect(() => {
@@ -70,18 +79,35 @@ function Scoreboard(props) {
         uid: user.id,
         name: user.name,
         points: points,
+        place: 0,
       };
       l.push(namePoint);
     });
     l.sort((a, b) => (a.points < b.points ? 1 : -1));
-    setNamePointList(l);
+
+    let out = [];
+    l.forEach((a, number) => {
+      a.place = number + 1;
+      out.push(a);
+    });
+
+    setNamePointList(out);
+  }
+
+  function getCol(n) {
+    console.log(n);
+    try {
+      return col[n];
+    } catch {
+      return colors.below;
+    }
   }
 
   function sep() {
     return (
       <View
         style={{
-          height: 2,
+          height: 1,
           width: "100%",
           backgroundColor: colors.passive,
         }}
@@ -89,12 +115,16 @@ function Scoreboard(props) {
     );
   }
 
+  function back() {
+    navigation.navigate("Hem");
+  }
+
   function scoreItem({ item }) {
-    console.log(item);
+    const c = getCol(item.place);
     return (
-      <View>
-        <Text>{item.name}</Text>
-        <Text>{item.points}</Text>
+      <View style={[styles.scoreItemContainer, { backgroundColor: c }]}>
+        <Text style={styles.scoreItemName}>{item.name}</Text>
+        <Text style={styles.scoreItemPoints}>{item.points}p</Text>
       </View>
     );
   }
@@ -105,6 +135,7 @@ function Scoreboard(props) {
         <Loading namn="Loading..."></Loading>
       ) : (
         <View style={styles.container2}>
+          <BackButton funk={back}></BackButton>
           <Text style={styles.titel}>Scoreboard</Text>
           <FlatList
             showsHorizontalScrollIndicator={false}
@@ -142,6 +173,23 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+    paddingTop: 25,
+  },
+  scoreItemContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: 75,
+  },
+  scoreItemName: {
+    fontWeight: "600",
+    fontSize: 26,
+    paddingLeft: 20,
+  },
+  scoreItemPoints: {
+    fontWeight: "600",
+    fontSize: 26,
+    paddingRight: 20,
   },
 });
 

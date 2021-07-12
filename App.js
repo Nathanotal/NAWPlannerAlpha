@@ -45,7 +45,11 @@ export default function App() {
             <Stack.Screen name="Profil" component={Profil} />
             <Stack.Screen name="Login" component={Login} navigation={navRef} />
             <Stack.Screen name="EnterPoints" component={EnterPoints} />
-            <Stack.Screen name="Scoreboard" component={Scoreboard} />
+            <Stack.Screen
+              name="Scoreboard"
+              component={Scoreboard}
+              navigation={navRef}
+            />
             <Stack.Screen
               name="CreateUser"
               component={CreateUser}

@@ -52,7 +52,7 @@ function EnterPoints(props) {
     return (
       <View
         style={{
-          height: 2,
+          height: 1,
           width: "100%",
           backgroundColor: colors.passive,
         }}

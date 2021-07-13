@@ -1,10 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import ProfilePicture from "../Komponenter/ProfilePicture";
+import SettingsButton from "../Komponenter/SettingsButton";
 
-function Profil(props) {
+function Profil({ navigation }) {
   return (
     <View style={styles.container}>
+      <SettingsButton
+        funk={() => {
+          navigation.navigate("SettingsPage");
+        }}
+      ></SettingsButton>
       <Text style={styles.titel}>Profil</Text>
       <ProfilePicture></ProfilePicture>
     </View>

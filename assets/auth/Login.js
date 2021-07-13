@@ -8,6 +8,8 @@ import * as Yup from "yup";
 import firebase from "../../firebase";
 import Knapp from "../Komponenter/Knapp";
 import Loading from "../Skarmar/Loading";
+// import { useContext } from "react";
+// import { AuthC } from "./auth";
 
 const validate = Yup.object().shape({
   Email: Yup.string().required().email().label("Email"),
@@ -15,9 +17,10 @@ const validate = Yup.object().shape({
 });
 
 // Fix how values are handled!
-function Login({ navigation, set }) {
+function Login({ navigation }) {
   // TODO: Implement session handling
-  const [isLoading, setLoadStatus] = useState(false);
+  // const { showTab } = useContext(AuthC);
+  const [isLoading, setLoadStatus] = useState(true);
   const [isError, setErrorStatus] = useState(false);
 
   function handleLogin(values) {
@@ -27,6 +30,7 @@ function Login({ navigation, set }) {
       .signInWithEmailAndPassword(values.Email, values.Password)
       .then(() => {
         console.log("Logged in");
+
         navigation.navigate("Hem");
       })
       .catch((e) => {
@@ -34,20 +38,6 @@ function Login({ navigation, set }) {
         console.log(e);
         setErrorStatus(true);
         setLoadStatus(false);
-        set(true);
-      });
-  }
-
-  // This should not be implemented here but is coded for reference (MOVE THIS)
-  function logOut() {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        console.log("Signed out");
-      })
-      .catch((e) => {
-        console.log(e);
       });
   }
 
@@ -57,16 +47,13 @@ function Login({ navigation, set }) {
 
   useEffect(() => {
     // Set loading to be true as default if you want to check session before!
-    if (isLoading) {
-      // Check if there is a local login stored:
-      if (false) {
-        // If so initialize firebase and login
-        const auth = firebase.auth();
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        navigation.navigate("Hem");
       } else {
-        // Else show login/signup screen
         setLoadStatus(false);
       }
-    }
+    });
   }, []);
 
   return (

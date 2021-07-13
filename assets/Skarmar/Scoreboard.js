@@ -21,7 +21,12 @@ function Scoreboard({ namePointList, back }) {
 
   function getCol(n) {
     try {
-      return col[n];
+      const a = col[n];
+      if (a == null) {
+        return colors.below;
+      } else {
+        return a;
+      }
     } catch {
       return colors.below;
     }

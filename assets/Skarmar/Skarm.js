@@ -12,6 +12,8 @@ import CheckSquareIcon from "../icons/CheckSquareIcon.js";
 import UserIcon from "../icons/UserIcon.js";
 import HomeIcon from "../icons/HomeIcon.js";
 import AddIcon from "../icons/AddIcon.js";
+import { useContext } from "react";
+import { AuthC } from "../auth/auth.js";
 
 function hem(f, s) {
   s({ hem: colours.primary, check: colours.black, profil: colours.black });
@@ -27,7 +29,8 @@ function profil(f, s) {
 }
 
 // Bastemplate för skärm
-function Skarm({ children, style, k1F, k2F, k3F, showTab }) {
+function Skarm({ children, style, k1F, k2F, k3F }) {
+  const { showTab } = useContext(AuthC);
   const [col, setCol] = useState({
     hem: colours.primary,
     check: colours.black,

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, FlatList } from "react-native";
 import InfoRuta from "../Komponenter/InfoRuta";
 
 // This way you can use the context!
@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Scoreboard from "./Scoreboard";
 import colors from "../colors";
+import Loading from "./Loading";
 
 function placeHolder() {}
 
@@ -16,6 +17,7 @@ function Hem({ navigation }) {
   const { user, userData, challenges } = useContext(AuthC);
   const [isLoading, setLoading] = useState(true);
   const [namePointList, setNamePointList] = useState([]);
+  const [miniNamePointList, setMiniNamePointList] = useState([]);
   const [showScoreBoard, setShowScoreBoard] = useState(false);
   const col = {
     1: colors.first,
@@ -109,6 +111,7 @@ function Hem({ navigation }) {
     });
     console.log("updated");
     setNamePointList(out);
+    setMiniNamePointList(out.slice(0, 3));
   }
 
   function getPoints() {
@@ -123,13 +126,11 @@ function Hem({ navigation }) {
     setShowScoreBoard(false);
   }
 
-  function getMyNumber() {
-    console.log("Namepoint", namePointList);
+  function getMyNumber(u) {
     if (namePointList.length === 0) {
-      return { num: "a", col: colors.passive, pref: "rd" };
+      return { num: "", col: colors.passive, pref: "" };
     } else {
-      const place = namePointList.find(({ uid }) => uid === user.uid).place;
-      console.log(getPrefix(place));
+      const place = namePointList.find(({ uid }) => uid === u.uid).place;
       return {
         num: place,
         col: getCol(place),
@@ -139,7 +140,7 @@ function Hem({ navigation }) {
   }
 
   function StandingNumber() {
-    const { num, col, pref } = getMyNumber();
+    const { num, col, pref } = getMyNumber(user);
     return (
       <View
         style={[
@@ -157,41 +158,68 @@ function Hem({ navigation }) {
     );
   }
 
+  function MiniScoreItem({ item }) {
+    const { num, col, pref } = getMyNumber(item);
+    return (
+      <View style={[{ backgroundColor: col }, styles.miniScoreItemContainer]}>
+        <Text style={styles.miniScoreText}>{item.name}</Text>
+        <Text style={styles.miniPoints}>{item.points}p</Text>
+      </View>
+    );
+  }
+
+  // Thank heaven for map, Flatlist never again
+  function MiniScoreBoard() {
+    return (
+      <View style={styles.miniScoreContainer}>
+        {miniNamePointList.map((item) => {
+          return <MiniScoreItem item={item} key={item.uid}></MiniScoreItem>;
+        })}
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      {showScoreBoard ? (
-        <Scoreboard namePointList={namePointList} back={back}></Scoreboard>
+      {isLoading ? (
+        <Loading namn={"Loading..."}></Loading>
       ) : (
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          scrollIndicatorInsets={{ right: 1 }}
-          contentContainerStyle={{
-            marginTop: 10,
-          }}
-        >
-          <Text style={styles.titel}>Hem</Text>
-          <View style={{ flex: 1 }}>
-            <View style={styles.info}>
-              <InfoRuta onPress={scoreboard} text="Score">
-                <Text>Hej</Text>
-              </InfoRuta>
-              <InfoRuta onPress={standing} text="1st">
-                <StandingNumber></StandingNumber>
-              </InfoRuta>
-            </View>
-            {/* <InfoRuta
+        <View style={styles.container}>
+          {showScoreBoard ? (
+            <Scoreboard namePointList={namePointList} back={back}></Scoreboard>
+          ) : (
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              scrollIndicatorInsets={{ right: 1 }}
+              contentContainerStyle={{
+                marginTop: 10,
+              }}
+            >
+              <Text style={styles.titel}>Hem</Text>
+              <View style={{ flex: 1 }}>
+                <View style={styles.info}>
+                  <InfoRuta onPress={scoreboard} text="Score">
+                    <MiniScoreBoard></MiniScoreBoard>
+                  </InfoRuta>
+                  <InfoRuta onPress={standing} text="1st">
+                    <StandingNumber></StandingNumber>
+                  </InfoRuta>
+                </View>
+                {/* <InfoRuta
             size="bred"
             onPress={placeHolder}
             text="Deltagare"
           ></InfoRuta> */}
-            <InfoRuta
-              size="stor"
-              onPress={placeHolder}
-              text="Poängjakt"
-            ></InfoRuta>
-          </View>
-        </ScrollView>
+                <InfoRuta
+                  size="stor"
+                  onPress={placeHolder}
+                  text="Poängjakt"
+                ></InfoRuta>
+              </View>
+            </ScrollView>
+          )}
+        </View>
       )}
     </View>
   );
@@ -222,8 +250,38 @@ const styles = StyleSheet.create({
   },
   place: {
     fontSize: 60,
-    fontWeight: "650",
+    fontWeight: "600",
     color: colors.black,
+  },
+  miniList: {
+    flex: 1,
+    height: "100%",
+    width: "100%",
+    // backgroundColor: "red",
+  },
+  miniScoreContainer: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    // backgroundColor: "gray",
+  },
+  miniScoreItemContainer: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    // height: "100%",
+  },
+  miniScoreText: {
+    fontWeight: "600",
+    fontSize: 20,
+    paddingLeft: 10,
+  },
+  miniPoints: {
+    fontWeight: "600",
+    fontSize: 20,
+    paddingRight: 10,
   },
 });
 

@@ -14,6 +14,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import EnterPoints from "./assets/Skarmar/EnterPoints";
 import Scoreboard from "./assets/Skarmar/Scoreboard";
 import colors from "./assets/colors";
+import SettingsPage from "./assets/Skarmar/SettingsPage";
 
 // Initialize
 const Stack = createStackNavigator();
@@ -27,7 +28,8 @@ function nav(n, place) {
 // I will probably have to refractor the tabbar correctly with something like this: https://stackoverflow.com/questions/60177053/react-navigation-5-hide-tab-bar-from-stack-navigator
 export default function App() {
   const navRef = React.useRef(null);
-  const [showTab, setTab] = useState(true);
+  // const [showTab, setTab] = useState(false);
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.passive }}>
       <Auth>
@@ -35,7 +37,7 @@ export default function App() {
           k1F={() => nav(navRef, "Hem")}
           k2F={() => nav(navRef, "EnterPoints")}
           k3F={() => nav(navRef, "Profil")}
-          showTab={showTab}
+          // showTab={showTab}
         >
           <NavigationContainer ref={navRef}>
             <Stack.Navigator
@@ -45,24 +47,22 @@ export default function App() {
             >
               <Stack.Screen name="Hem" component={Hem} navigation={navRef} />
               {/* <Stack.Screen name="Checklist" component={Checklist} /> */}
-              <Stack.Screen name="Profil" component={Profil} set={setTab} />
+              <Stack.Screen name="Profil" component={Profil} />
               <Stack.Screen
                 name="Login"
                 component={Login}
                 navigation={navRef}
-                set={setTab}
               />
               <Stack.Screen name="EnterPoints" component={EnterPoints} />
-              {/* <Stack.Screen
-                name="Scoreboard"
-                component={Scoreboard}
-                // navigation={navRef}
-              /> */}
+              <Stack.Screen
+                name="SettingsPage"
+                component={SettingsPage}
+                navigation={navRef}
+              />
               <Stack.Screen
                 name="CreateUser"
                 component={CreateUser}
                 navigation={navRef}
-                set={setTab}
               />
               <Stack.Screen
                 name="Register"

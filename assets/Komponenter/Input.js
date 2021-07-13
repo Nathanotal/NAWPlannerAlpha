@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     width: "80%",
-    backgroundColor: colors.passive,
+    backgroundColor: colors.formInput,
     borderRadius: 25,
     alignSelf: "center", // This is not very good, but not that bad either
   },

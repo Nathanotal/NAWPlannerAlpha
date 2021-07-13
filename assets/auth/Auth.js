@@ -7,6 +7,7 @@ export const AuthC = React.createContext();
 // Creates a context for the user so that userdata can be easily accessed anywhere
 function Auth({ children }) {
   const [isLoading, setLoading] = useState(true);
+  const [showTab, setTab] = useState(false);
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState([]);
   const [challenges, setChallenges] = useState([]);
@@ -47,7 +48,6 @@ function Auth({ children }) {
   function checkLoadingStatus() {
     // Attempt to not show isLoading while in loginscreen
     if (!(user == null)) {
-      setLoading(true);
       if (!(userData.length === 0 || challenges.length === 0)) {
         setLoading(false);
       }
@@ -57,6 +57,12 @@ function Auth({ children }) {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
+      console.log("hej");
+      if (user) {
+        setTab(true);
+      } else {
+        setTab(false);
+      }
     });
   }, []);
 
@@ -69,7 +75,7 @@ function Auth({ children }) {
     }
   });
   return (
-    <AuthC.Provider value={{ user, userData, challenges, isLoading }}>
+    <AuthC.Provider value={{ user, userData, challenges, isLoading, showTab }}>
       {children}
     </AuthC.Provider>
   );

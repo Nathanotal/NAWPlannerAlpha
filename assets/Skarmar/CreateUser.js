@@ -17,7 +17,7 @@ const validate = Yup.object().shape({
   Desc: Yup.string().nullable().label("Short description"),
 });
 
-function CreateUser({ navigation, set }) {
+function CreateUser({ navigation }) {
   const [isLoading, setLoadStatus] = useState(false);
   const { user } = useContext(AuthC);
   const ref = firebase.firestore().collection("users");
@@ -45,7 +45,7 @@ function CreateUser({ navigation, set }) {
       .set(newUser)
       .then(() => {
         navigation.navigate("Hem");
-        set(true);
+        // set(true);
       })
       .catch((e) => {
         console.log(e);

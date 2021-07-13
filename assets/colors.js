@@ -11,9 +11,10 @@ export default colors = {
   gray: "#808080",
   first: "#ffd24d",
   second: "#79ff4d",
-  third: "#afaa9d", //"#4da6ff",
-  fourth: "#a6a6a6",
+  third: "#4da6ff",
+  fourth: "#a6a6a6", // #afaa9d
   fifth: "#a6a6a6",
   sixth: "#808080",
   below: "#808080",
+  formInput: "#e6e6e6",
 };

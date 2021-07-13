@@ -2,12 +2,13 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import colors from "../colors";
 import Feather from "react-native-vector-icons/Feather"; // This is a workaround as vector icons does not like multiple imports
-
+import ArrowLeftIcon from "../icons/ArrowLeftIcon";
 function BackButton({ funk }) {
   return (
     <View style={styles.buttonContainer}>
       <TouchableOpacity style={styles.knapp} onPress={funk}>
-        <Feather name="arrow-right" size={30} />
+        {/* <Feather name="arrow-right" size={30} /> */}
+        <ArrowLeftIcon></ArrowLeftIcon>
       </TouchableOpacity>
     </View>
   );

@@ -5,6 +5,10 @@ import colors from "../colors";
 import firebase from "../../firebase";
 import { useContext } from "react";
 import { AuthC } from "../auth/auth";
+import ImageIcon from "../icons/ImageIcon";
+import SendIcon from "../icons/SendIcon";
+import SquareIcon from "../icons/SquareIcon";
+import CheckSquareIcon from "../icons/CheckSquareIcon";
 // import { useEffect } from "react";
 // import { useState } from "react";
 
@@ -22,7 +26,7 @@ function ChallengeDesc({ item, userData, challengeCompleted }) {
   async function getUser() {
     const userRef = ref.doc(user.uid);
     const doc = await userRef.get();
-    console.log(doc.data());
+    // console.log(doc.data());
     return doc.data().completed;
   }
 
@@ -47,20 +51,24 @@ function ChallengeDesc({ item, userData, challengeCompleted }) {
       {/* <Text style={styles.pictureText}>Add picture:</Text> */}
       {/* {item.multi && } */}
       <TouchableOpacity style={styles.pictureSquare}>
-        <Feather name="image" style={styles.icon}></Feather>
+        {/* <Feather name="image" style={styles.icon}></Feather> */}
+        <ImageIcon></ImageIcon>
       </TouchableOpacity>
       {/* <Text style={styles.sendText}>Send</Text> */}
       <TouchableOpacity style={styles.submitButton}>
-        <Feather name="send" style={styles.icon}></Feather>
+        {/* <Feather name="send" style={styles.icon}></Feather> */}
+        <SendIcon></SendIcon>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.checkButton}
         onPress={() => challengeCompleted(item.id)}
       >
         {!userData.completed.includes(item.id) ? (
-          <Feather name="square" style={styles.icon}></Feather>
+          // <Feather name="square" style={styles.icon}></Feather>
+          <SquareIcon size={28}></SquareIcon>
         ) : (
-          <Feather name="check-square" style={styles.icon}></Feather>
+          // <Feather name="check-square" style={styles.icon}></Feather>
+          <CheckSquareIcon size={28}></CheckSquareIcon>
         )}
       </TouchableOpacity>
     </View>

@@ -7,13 +7,9 @@ import { useState } from "react";
 import Loading from "./Loading";
 import BackButton from "../Komponenter/BackButton";
 
-function Scoreboard({ navigation }) {
-  const [isLoading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
-  const [challenges, setChallenges] = useState([]);
-  const ref = firebase.firestore().collection("users");
-  const refChallenge = firebase.firestore().collection("challenges");
-  const [namePointList, setNamePointList] = useState([]);
+// For some very stupid reason context cannot be used here
+function Scoreboard({ namePointList, back }) {
+  const isLoading = false;
   const col = {
     1: colors.first,
     2: colors.second,
@@ -23,79 +19,7 @@ function Scoreboard({ navigation }) {
     6: colors.sixth,
   };
 
-  // Semi good solution
-  useEffect(() => {
-    if (isLoading) {
-      if (!(users.length === 0 || challenges.length === 0)) {
-        setLoading(false);
-        getPoints();
-      }
-    }
-  });
-
-  useEffect(() => {
-    getUsers();
-    getChallenges();
-  }, []);
-
-  // Implement selective get method
-  function getUsers() {
-    ref.onSnapshot((querySnapshot) => {
-      const items = [];
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data());
-      });
-      setUsers(items);
-    });
-  }
-
-  function getChallenges() {
-    refChallenge.onSnapshot((querySnapshot) => {
-      const items = [];
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data());
-      });
-      setChallenges(items);
-    });
-  }
-
-  function getPoints() {
-    var d = {};
-    challenges.forEach((challenge) => {
-      d[challenge.id] = challenge.points;
-    });
-    calculateStandings(d);
-  }
-
-  function calculateStandings(pointDict) {
-    let l = [];
-
-    users.forEach((user) => {
-      let points = 0;
-      user.completed.forEach((challenge) => {
-        points = points + pointDict[challenge];
-      });
-      let namePoint = {
-        uid: user.id,
-        name: user.name,
-        points: points,
-        place: 0,
-      };
-      l.push(namePoint);
-    });
-    l.sort((a, b) => (a.points < b.points ? 1 : -1));
-
-    let out = [];
-    l.forEach((a, number) => {
-      a.place = number + 1;
-      out.push(a);
-    });
-
-    setNamePointList(out);
-  }
-
   function getCol(n) {
-    console.log(n);
     try {
       return col[n];
     } catch {
@@ -113,10 +37,6 @@ function Scoreboard({ navigation }) {
         }}
       />
     );
-  }
-
-  function back() {
-    navigation.navigate("Hem");
   }
 
   function scoreItem({ item }) {
@@ -141,7 +61,6 @@ function Scoreboard({ navigation }) {
             showsHorizontalScrollIndicator={false}
             style={styles.list}
             data={namePointList}
-            // extraData={reload}
             renderItem={scoreItem}
             keyExtractor={(item) => item.uid}
             ItemSeparatorComponent={sep}
@@ -180,6 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     height: 75,
+    width: "100%",
   },
   scoreItemName: {
     fontWeight: "600",

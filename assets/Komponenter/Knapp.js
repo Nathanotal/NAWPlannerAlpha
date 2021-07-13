@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   kategoriText: {
     fontSize: 18,
     fontWeight: "600",
-    color: colors.white, // This should be improved for contrast purposes
+    color: colors.passive, // This should be improved for contrast purposes
   },
 });
 

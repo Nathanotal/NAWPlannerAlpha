@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
-import { SafeAreaView, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import colours from "../colors.js";
+import CheckSquareIcon from "../icons/CheckSquareIcon.js";
+import UserIcon from "../icons/UserIcon.js";
+import HomeIcon from "../icons/HomeIcon.js";
+import AddIcon from "../icons/AddIcon.js";
 
 function hem(f, s) {
   s({ hem: colours.primary, check: colours.black, profil: colours.black });
@@ -32,19 +42,22 @@ function Skarm({ children, style, k1F, k2F, k3F, showTab }) {
             style={styles.knapp}
             onPress={() => hem(k1F, setCol)}
           >
-            <Feather name="home" size={50} color={col.hem} />
+            {/* <Feather name="home" size={50} color={col.hem} /> */}
+            <HomeIcon size={50} color={col.hem}></HomeIcon>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.knapp}
             onPress={() => checkList(k2F, setCol)}
           >
-            <Feather name="check-square" size={50} color={col.check} />
+            {/* <Feather name="check-square" size={50} color={col.check} /> */}
+            <AddIcon size={50} color={col.check}></AddIcon>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.knapp}
             onPress={() => profil(k3F, setCol)}
           >
-            <Feather name="user" size={50} color={col.profil} />
+            {/* <Feather name="user" size={50} color={col.profil} /> */}
+            <UserIcon size={50} color={col.profil}></UserIcon>
           </TouchableOpacity>
         </View>
       )}
@@ -64,7 +77,9 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   huvud: {
-    flex: 1,
+    // flex: 1,
+    height: "99.5%", // Very wierd bug, workaround. Creates mystic scrollindicator for no reason
+    width: "100%",
   },
   knapp: {
     justifyContent: "center",

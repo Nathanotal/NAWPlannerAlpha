@@ -15,7 +15,7 @@ const validate = Yup.object().shape({
 });
 
 // Fix how values are handled!
-function Login({ navigation }) {
+function Login({ navigation, set }) {
   // TODO: Implement session handling
   const [isLoading, setLoadStatus] = useState(false);
   const [isError, setErrorStatus] = useState(false);
@@ -34,6 +34,7 @@ function Login({ navigation }) {
         console.log(e);
         setErrorStatus(true);
         setLoadStatus(false);
+        set(true);
       });
   }
 
@@ -113,7 +114,7 @@ function Login({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.passive,
   },
   loginForm: {
     display: "flex",

@@ -13,7 +13,7 @@ const windowHeight = Dimensions.get("window").height;
 
 // Text is temporary, should contain preview of content
 
-function InfoRuta({ size, onPress, text }) {
+function InfoRuta({ size, onPress, text, children }) {
   return (
     <TouchableOpacity onPress={() => onPress()}>
       <View
@@ -24,7 +24,7 @@ function InfoRuta({ size, onPress, text }) {
           size === "bred" && styles.rutaBred,
         ]}
       >
-        <Text style={styles.titel}>{text}</Text>
+        {children}
       </View>
     </TouchableOpacity>
   );
@@ -35,27 +35,28 @@ const styles = StyleSheet.create({
   rutaBas: {
     alignSelf: "flex-start",
     borderRadius: windowWidth / 20,
-    backgroundColor: col.white,
-    borderWidth: windowWidth / 40,
+    backgroundColor: col.passive,
+    borderWidth: windowWidth / 80,
     borderColor: col.primary,
     alignItems: "center",
+    overflow: "hidden",
   },
   rutaVanlig: {
     width: (windowWidth - 20) / 2,
     height: (windowWidth - 20) / 2,
-    margin: 4,
+    // margin: 4,
   },
   rutaBred: {
     width: windowWidth - 10,
     height: (windowWidth - 20) / 2,
-    marginHorizontal: 5,
-    margin: 4,
+    // marginHorizontal: 5,
+    // margin: 4,
   },
   rutaStor: {
     width: windowWidth - 10,
     height: windowWidth - 10,
     marginHorizontal: 5,
-    margin: 4,
+    // margin: 4,
   },
   titel: {
     fontWeight: "600",

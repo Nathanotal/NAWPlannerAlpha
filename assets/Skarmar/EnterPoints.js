@@ -27,25 +27,24 @@ const validate = Yup.object().shape({
 
 // Extremely messy because of Flatlist. Note: Never use Flatlist for complex functionality
 function EnterPoints(props) {
-  const ref = firebase.firestore().collection("challenges");
   const ref2 = firebase.firestore().collection("users");
-  const [challenges, setChallenges] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  const [localChallenges, setChallenges] = useState(null);
+  const [localLoading, setLoading] = useState(true);
   const [wtf, wtfl] = useState(0); // Workaround since flatlist is badly implemented
-  const { user } = useContext(AuthC);
-  const [userData, setUserData] = useState(null);
+  const { user, userData, challenges, isLoading } = useContext(AuthC);
+  const [currentUserData, setCurrentUserData] = useState(null);
 
-  // This is not a fantastic implementation
   useEffect(() => {
-    getUser();
-    getChallenges();
+    getCurrentUserData();
+    setChallenges(challenges);
   }, []);
 
-  async function getUser() {
-    const userRef = ref2.doc(user.uid);
-    userRef.get().then((doc) => {
-      setUserData(doc.data());
+  function getCurrentUserData() {
+    var found = userData.find(function (userData, index) {
+      if (userData.id == user.uid) return true;
     });
+    setCurrentUserData(found);
+    setLoading(false);
   }
 
   function sep() {
@@ -60,7 +59,7 @@ function EnterPoints(props) {
     );
   }
 
-  // Beacuse of Babel logic and compile we cannot use <Text> here, reverting to HTML <p>
+  // Beacuse of Babel logic and compile we cannot use <Text> here(if it was to be an individual component), reverting to HTML <p>
   function ChallengeItem({ item }) {
     return (
       <>
@@ -71,7 +70,7 @@ function EnterPoints(props) {
         >
           <View style={styles.challengeContainer}>
             <Text style={styles.challengeTitle}>{item.title}</Text>
-            {!userData.completed.includes(item.id) ? (
+            {!currentUserData.completed.includes(item.id) ? (
               <Feather name="square" style={styles.challengeCheck}></Feather>
             ) : (
               <Feather
@@ -84,7 +83,7 @@ function EnterPoints(props) {
         <Collapsible collapsed={!item.isSelected}>
           <ChallengeDesc
             item={item}
-            userData={userData}
+            userData={currentUserData}
             challengeCompleted={challengeCompleted}
           ></ChallengeDesc>
         </Collapsible>
@@ -93,63 +92,50 @@ function EnterPoints(props) {
   }
 
   function challengeCompleted(id) {
-    getUser().then(() => {
-      if (userData.completed.includes(id)) {
-        ref2
-          .doc(user.uid)
-          .update({ completed: firebase.firestore.FieldValue.arrayRemove(id) })
-          .then(console.log("check off"))
-          .catch((e) => {
-            console.log(e);
-            // setErrorStatus(true);
-            // setLoadStatus(false);
-          });
-      } else {
-        ref2
-          .doc(user.uid)
-          .update({ completed: firebase.firestore.FieldValue.arrayUnion(id) })
-          .then(console.log("check"))
-          .catch((e) => {
-            console.log(e);
-            // setErrorStatus(true);
-            // setLoadStatus(false);
-          });
+    // Instantly update locally
+    const oldCompleted = [...currentUserData.completed];
+    if (oldCompleted.includes(id)) {
+      const index = oldCompleted.indexOf(id);
+      if (index > -1) {
+        currentUserData.completed.splice(index, 1);
       }
-    });
+      setCurrentUserData(currentUserData);
+    } else {
+      currentUserData.completed.push(id);
+      setCurrentUserData(currentUserData);
+    }
+    wtfl(wtf + 1);
+
+    // Run db-update in the background, we can maybe set this in "Skarm" but this also limits certain functionality
+    if (oldCompleted.includes(id)) {
+      ref2
+        .doc(user.uid)
+        .update({ completed: firebase.firestore.FieldValue.arrayRemove(id) })
+        .then(console.log("check off"))
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      ref2
+        .doc(user.uid)
+        .update({ completed: firebase.firestore.FieldValue.arrayUnion(id) })
+        .then(console.log("check"))
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   }
 
   function changeChallenges(item) {
     item.isSelected = !item.isSelected;
-    challenges[item.index] = item;
+    localChallenges[item.index] = item;
     wtfl(wtf + 1);
-    setChallenges(challenges);
-  }
-
-  // Get all possible entries from database, list them, make them touchable
-  // Get a title for each category that looks some kind of way, then list the items
-  // Enable sorting?
-  function getChallenges() {
-    ref.onSnapshot((querySnapshot) => {
-      const items = [];
-      let index = 0;
-      querySnapshot.forEach((doc) => {
-        const data = {
-          index: index,
-          isSelected: false,
-          id: doc.id,
-          ...doc.data(), // Nice :)
-        };
-        items.push(data);
-        index++;
-      });
-      setChallenges(items);
-      setLoading(false);
-    });
+    setChallenges(localChallenges);
   }
 
   return (
     <View style={styles.container}>
-      {isLoading ? (
+      {localLoading ? (
         <Loading namn="Loading..."></Loading>
       ) : (
         <View style={styles.container2}>
@@ -157,7 +143,7 @@ function EnterPoints(props) {
           <FlatList
             showsHorizontalScrollIndicator={false}
             style={styles.list}
-            data={challenges}
+            data={localChallenges}
             extraData={wtf}
             renderItem={ChallengeItem}
             keyExtractor={(item) => item.id}

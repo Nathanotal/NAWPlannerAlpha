@@ -84,7 +84,7 @@ function Register({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.passive,
   },
   loginForm: {
     display: "flex",

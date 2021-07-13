@@ -11,6 +11,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import col from "../colors";
 import { Dimensions } from "react-native";
+import CheckSquareIcon from "../icons/CheckSquareIcon";
+import SquareIcon from "../icons/SquareIcon";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -48,6 +50,7 @@ function toDoCard({ info }) {
           <View style={styles.subSubCard}>
             <ScrollView
               showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
               contentContainerStyle={{
                 flex: 1,
                 marginTop: 10,
@@ -66,9 +69,11 @@ function toDoCard({ info }) {
                     }
                   >
                     {data.completed ? (
-                      <Feather name="check-square" size={30} />
+                      // <Feather name="check-square" size={30} />
+                      <CheckSquareIcon size={30}></CheckSquareIcon>
                     ) : (
-                      <Feather name="square" size={30} />
+                      // <Feather name="square" size={30} />
+                      <SquareIcon size={30}></SquareIcon>
                     )}
                   </TouchableOpacity>
                 </View>
@@ -102,7 +107,7 @@ const styles = StyleSheet.create({
     height: windowHeight - 320, // Temporary, this should be based on flex
     width: windowWidth - 125,
     borderRadius: 20,
-    backgroundColor: col.white,
+    backgroundColor: col.passive,
     alignItems: "center",
     overflow: "hidden",
   },

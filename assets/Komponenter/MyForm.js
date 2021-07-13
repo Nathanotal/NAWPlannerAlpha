@@ -30,7 +30,7 @@ function MyForm({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.passive,
     // justifyContent: "space-between",
     width: "100%", // For some reason this is necessary
     alignContent: "flex-start",

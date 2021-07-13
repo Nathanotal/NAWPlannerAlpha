@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: (windowWidth * 2) / 3,
     height: (windowWidth * 2) / 3,
-    backgroundColor: colors.white,
+    backgroundColor: colors.passive,
     borderRadius: windowWidth / 3,
     borderWidth: windowWidth / 30,
     borderColor: colors.primary,

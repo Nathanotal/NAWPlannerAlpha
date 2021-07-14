@@ -19,6 +19,7 @@ function Hem({ navigation }) {
   const [namePointList, setNamePointList] = useState([]);
   const [miniNamePointList, setMiniNamePointList] = useState([]);
   const [showScoreBoard, setShowScoreBoard] = useState(false);
+  const [update, setUpdate] = useState(true);
   const col = {
     1: colors.first,
     2: colors.second,
@@ -40,14 +41,20 @@ function Hem({ navigation }) {
         !(userData.length === 0 || challenges.length === 0) &&
         namePointList.length === 0
       ) {
-        getPoints();
+        // getPoints();
         setLoading(false);
         try {
           clearTimeout(i);
         } catch {}
-        i = setInterval(getPoints, 5000);
+        i = setInterval(() => setUpdate(true), 2000); // Not ideal but state is not my friend today
       }
     }
+
+    if (!(userData.length === 0 || challenges.length === 0) && update) {
+      setUpdate(false);
+      getPoints();
+    }
+    // console.log("reloaded", userData);
   });
 
   // Maybe implement expanding element
@@ -91,9 +98,21 @@ function Hem({ navigation }) {
 
     userData.forEach((user) => {
       let points = 0;
+
+      // Regular challenges
       user.completed.forEach((challenge) => {
         points = points + pointDict[challenge];
       });
+
+      // Multi challenges
+      const map = new Map(Object.entries(user.multiCount));
+      const extra = Array.from(
+        [...map.entries()].map((v) => pointDict[v[0]] * v[1])
+      );
+      extra.forEach((num) => {
+        points = points + num;
+      });
+
       let namePoint = {
         uid: user.id,
         name: user.name,
@@ -109,7 +128,7 @@ function Hem({ navigation }) {
       a.place = number + 1;
       out.push(a);
     });
-    console.log("updated");
+    // console.log("updated", out.slice(0, 2));
     setNamePointList(out);
     setMiniNamePointList(out.slice(0, 3));
   }

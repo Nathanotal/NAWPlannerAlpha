@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   titel: {
     fontWeight: "600",
     fontSize: 40,
-    marginTop: 30,
+    marginTop: 40,
     marginBottom: 30,
     alignSelf: "center",
   },

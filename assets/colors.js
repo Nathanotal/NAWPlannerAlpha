@@ -10,7 +10,7 @@ export default colors = {
   passive: "#F5F5F5",
   gray: "#808080",
   first: "#ffd24d",
-  second: "#79ff4d",
+  second: "#a6ff4d",
   third: "#4da6ff",
   fourth: "#a6a6a6", // #afaa9d
   fifth: "#a6a6a6",

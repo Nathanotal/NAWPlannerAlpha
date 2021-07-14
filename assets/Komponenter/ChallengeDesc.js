@@ -9,6 +9,7 @@ import ImageIcon from "../icons/ImageIcon";
 import SendIcon from "../icons/SendIcon";
 import SquareIcon from "../icons/SquareIcon";
 import CheckSquareIcon from "../icons/CheckSquareIcon";
+import Incrementer from "./Incrementer";
 // import { useEffect } from "react";
 // import { useState } from "react";
 
@@ -59,18 +60,26 @@ function ChallengeDesc({ item, userData, challengeCompleted }) {
         {/* <Feather name="send" style={styles.icon}></Feather> */}
         <SendIcon></SendIcon>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.checkButton}
-        onPress={() => challengeCompleted(item.id)}
-      >
-        {!userData.completed.includes(item.id) ? (
-          // <Feather name="square" style={styles.icon}></Feather>
-          <SquareIcon size={28}></SquareIcon>
-        ) : (
-          // <Feather name="check-square" style={styles.icon}></Feather>
-          <CheckSquareIcon size={28}></CheckSquareIcon>
-        )}
-      </TouchableOpacity>
+      {item.multi ? (
+        <Incrementer
+          style={styles.incrementer}
+          f={challengeCompleted}
+          item={item}
+        ></Incrementer>
+      ) : (
+        <TouchableOpacity
+          style={styles.checkButton}
+          onPress={() => challengeCompleted(item.id)}
+        >
+          {!userData.completed.includes(item.id) ? (
+            // <Feather name="square" style={styles.icon}></Feather>
+            <SquareIcon size={28}></SquareIcon>
+          ) : (
+            // <Feather name="check-square" style={styles.icon}></Feather>
+            <CheckSquareIcon size={28}></CheckSquareIcon>
+          )}
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -106,6 +115,13 @@ const styles = StyleSheet.create({
     // alignSelf: "center",
     borderRadius: 25,
     bottom: 75,
+    right: 0,
+  },
+  incrementer: {
+    position: "absolute",
+    marginBottom: 25,
+    marginRight: 45,
+    bottom: 67.5,
     right: 0,
   },
   points: {

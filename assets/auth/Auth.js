@@ -37,6 +37,7 @@ function Auth({ children }) {
   // Load the users in one place!
   function getUsers() {
     uRef.onSnapshot((querySnapshot) => {
+      console.log("Changed");
       const items = [];
       querySnapshot.forEach((doc) => {
         items.push(doc.data());

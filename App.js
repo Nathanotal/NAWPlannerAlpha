@@ -15,6 +15,7 @@ import EnterPoints from "./assets/Skarmar/EnterPoints";
 import Scoreboard from "./assets/Skarmar/Scoreboard";
 import colors from "./assets/colors";
 import SettingsPage from "./assets/Skarmar/SettingsPage";
+import Test from "./assets/Komponenter/Incrementer";
 
 // Initialize
 const Stack = createStackNavigator();
@@ -64,6 +65,7 @@ export default function App() {
                 component={CreateUser}
                 navigation={navRef}
               />
+              {/* <Stack.Screen name="Test" component={Test} navigation={navRef} /> */}
               <Stack.Screen
                 name="Register"
                 component={Register}

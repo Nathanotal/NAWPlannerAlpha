@@ -33,20 +33,38 @@ function EnterPoints(props) {
   const [wtf, wtfl] = useState(0); // Workaround since flatlist is badly implemented
   const { user, userData, challenges, isLoading } = useContext(AuthC);
   const [currentUserData, setCurrentUserData] = useState(null);
+  const increment = firebase.firestore.FieldValue.increment(1);
+  const decrement = firebase.firestore.FieldValue.increment(-1);
 
   useEffect(() => {
     getCurrentUserData();
     setChallenges(challenges);
   }, []);
 
+  // Fix update better, (in other function)
   function getCurrentUserData() {
     var found = userData.find(function (userData, index) {
       if (userData.id == user.uid) return true;
     });
+    const map = new Map(Object.entries(found.multiCount));
+
+    // Magic
+    const extra = Array.from(
+      [...map.entries()]
+        .filter((v) => {
+          if (v[1] != 0) {
+            return v[0];
+          }
+        })
+        .map(([k]) => k)
+    );
+
+    found.completed = found.completed.concat(extra);
     setCurrentUserData(found);
     setLoading(false);
   }
 
+  // Break this out to a separate component
   function sep() {
     return (
       <View
@@ -59,7 +77,13 @@ function EnterPoints(props) {
     );
   }
 
+  // Todo, fix
+  function getCheckInfo() {
+    return true;
+  }
+
   // Beacuse of Babel logic and compile we cannot use <Text> here(if it was to be an individual component), reverting to HTML <p>
+  // Fix .includes for multi see getCheckInfo()
   function ChallengeItem({ item }) {
     return (
       <>
@@ -73,10 +97,19 @@ function EnterPoints(props) {
             {!currentUserData.completed.includes(item.id) ? (
               <Feather name="square" style={styles.challengeCheck}></Feather>
             ) : (
-              <Feather
-                name="check-square"
-                style={styles.challengeCheck}
-              ></Feather>
+              <>
+                {item.multi ? (
+                  <Feather
+                    name="plus-square"
+                    style={styles.challengeCheck}
+                  ></Feather>
+                ) : (
+                  <Feather
+                    name="check-square"
+                    style={styles.challengeCheck}
+                  ></Feather>
+                )}
+              </>
             )}
           </View>
         </TouchableHighlight>
@@ -91,23 +124,42 @@ function EnterPoints(props) {
     );
   }
 
-  function challengeCompleted(id) {
+  function challengeCompleted(id, multi, plus, count) {
     // Instantly update locally
     const oldCompleted = [...currentUserData.completed];
-    if (oldCompleted.includes(id)) {
-      const index = oldCompleted.indexOf(id);
-      if (index > -1) {
-        currentUserData.completed.splice(index, 1);
+    if (multi) {
+      if (
+        oldCompleted.includes(id) &&
+        (count === 0 || (count === 1 && !plus))
+      ) {
+        const index = oldCompleted.indexOf(id);
+        if (index > -1) {
+          currentUserData.completed.splice(index, 1);
+        }
+        setCurrentUserData(currentUserData);
+      } else {
+        if (oldCompleted.includes(id)) {
+        } else {
+          currentUserData.completed.push(id);
+          setCurrentUserData(currentUserData);
+        }
       }
-      setCurrentUserData(currentUserData);
     } else {
-      currentUserData.completed.push(id);
-      setCurrentUserData(currentUserData);
+      if (oldCompleted.includes(id)) {
+        const index = oldCompleted.indexOf(id);
+        if (index > -1) {
+          currentUserData.completed.splice(index, 1);
+        }
+        setCurrentUserData(currentUserData);
+      } else {
+        currentUserData.completed.push(id);
+        setCurrentUserData(currentUserData);
+      }
     }
-    wtfl(wtf + 1);
+    wtfl(wtf + 1); // Forceupdate
 
     // Run db-update in the background, we can maybe set this in "Skarm" but this also limits certain functionality
-    if (oldCompleted.includes(id)) {
+    if (oldCompleted.includes(id) && !multi) {
       ref2
         .doc(user.uid)
         .update({ completed: firebase.firestore.FieldValue.arrayRemove(id) })
@@ -116,13 +168,34 @@ function EnterPoints(props) {
           console.log(e);
         });
     } else {
-      ref2
-        .doc(user.uid)
-        .update({ completed: firebase.firestore.FieldValue.arrayUnion(id) })
-        .then(console.log("check"))
-        .catch((e) => {
-          console.log(e);
-        });
+      if (multi) {
+        const fbQ = "multiCount." + id;
+        if (plus) {
+          ref2
+            .doc(user.uid)
+            .update({ [fbQ]: increment })
+            .then(console.log("plus"))
+            .catch((e) => {
+              console.log(e);
+            });
+        } else {
+          ref2
+            .doc(user.uid)
+            .update({ [fbQ]: decrement })
+            .then(console.log("minus"))
+            .catch((e) => {
+              console.log(e);
+            });
+        }
+      } else {
+        ref2
+          .doc(user.uid)
+          .update({ completed: firebase.firestore.FieldValue.arrayUnion(id) })
+          .then(console.log("check"))
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     }
   }
 
@@ -159,7 +232,7 @@ const styles = StyleSheet.create({
   titel: {
     fontWeight: "600",
     fontSize: 40,
-    marginTop: 30,
+    marginTop: 40,
     marginBottom: 30,
     alignSelf: "center",
   },

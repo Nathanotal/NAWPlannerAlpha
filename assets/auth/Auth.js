@@ -58,7 +58,6 @@ function Auth({ children }) {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
-      console.log("hej");
       if (user) {
         setTab(true);
       } else {

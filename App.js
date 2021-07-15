@@ -43,7 +43,7 @@ export default function App() {
         >
           <NavigationContainer ref={navRef}>
             <Stack.Navigator
-              initialRouteName={"Test"}
+              initialRouteName={"Hem"}
               // screenOptions={{ tabBarVisible: false }}
               headerMode="none"
             >
@@ -66,11 +66,11 @@ export default function App() {
                 component={CreateUser}
                 navigation={navRef}
               />
-              <Stack.Screen
+              {/* <Stack.Screen
                 name="Test"
                 component={ChartComponent}
                 navigation={navRef}
-              />
+              /> */}
               <Stack.Screen
                 name="Register"
                 component={Register}

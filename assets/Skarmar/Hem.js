@@ -10,6 +10,7 @@ import { useState } from "react";
 import Scoreboard from "./Scoreboard";
 import colors from "../colors";
 import Loading from "./Loading";
+import ChartComponent from "../Komponenter/ChartComponent";
 
 function placeHolder() {}
 
@@ -230,11 +231,9 @@ function Hem({ navigation }) {
             onPress={placeHolder}
             text="Deltagare"
           ></InfoRuta> */}
-                <InfoRuta
-                  size="stor"
-                  onPress={placeHolder}
-                  text="Poängjakt"
-                ></InfoRuta>
+                <InfoRuta size="stor" onPress={placeHolder}>
+                  <ChartComponent thePoints={namePointList}></ChartComponent>
+                </InfoRuta>
               </View>
             </ScrollView>
           )}

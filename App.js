@@ -16,6 +16,7 @@ import Scoreboard from "./assets/Skarmar/Scoreboard";
 import colors from "./assets/colors";
 import SettingsPage from "./assets/Skarmar/SettingsPage";
 import Test from "./assets/Komponenter/Incrementer";
+import ChartComponent from "./assets/Komponenter/ChartComponent";
 
 // Initialize
 const Stack = createStackNavigator();
@@ -42,7 +43,7 @@ export default function App() {
         >
           <NavigationContainer ref={navRef}>
             <Stack.Navigator
-              initialRouteName={"Login"}
+              initialRouteName={"Test"}
               // screenOptions={{ tabBarVisible: false }}
               headerMode="none"
             >
@@ -65,7 +66,11 @@ export default function App() {
                 component={CreateUser}
                 navigation={navRef}
               />
-              {/* <Stack.Screen name="Test" component={Test} navigation={navRef} /> */}
+              <Stack.Screen
+                name="Test"
+                component={ChartComponent}
+                navigation={navRef}
+              />
               <Stack.Screen
                 name="Register"
                 component={Register}

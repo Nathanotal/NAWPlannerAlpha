@@ -43,7 +43,7 @@ export default function App() {
         >
           <NavigationContainer ref={navRef}>
             <Stack.Navigator
-              initialRouteName={"Hem"}
+              initialRouteName={"Login"}
               // screenOptions={{ tabBarVisible: false }}
               headerMode="none"
             >

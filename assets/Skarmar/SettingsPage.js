@@ -41,7 +41,7 @@ function SettingsPage({ navigation }) {
     let current = moment(rounded, "LLL");
     let manipulate = moment(latestDate, "LLL");
     let manipulate2 = manipulate.clone(); // This took too long to figure out
-    manipulate2.add(3, "hours"); // Fix
+    manipulate2.add(6, "hours");
     // Check if the last time:, if the last time is less than 6 hours ago, return "do not update", else update
 
     console.log(

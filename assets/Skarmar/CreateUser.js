@@ -40,18 +40,21 @@ function CreateUser({ navigation }) {
       id: id,
     };
 
-    ref
-      .doc(id)
-      .set(newUser)
-      .then(() => {
-        navigation.navigate("Hem");
-        // set(true);
-      })
-      .catch((e) => {
-        console.log(e);
-        setErrorStatus(true);
-        setLoadStatus(false);
-      });
+    // Temporarily disabled
+    // ref
+    //   .doc(id)
+    //   .set(newUser)
+    //   .then(() => {
+    //     navigation.navigate("Hem");
+    //     // set(true);
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //     setErrorStatus(true);
+    //     setLoadStatus(false);
+    //   });
+    setErrorStatus(true);
+    setLoadStatus(false);
   }
 
   function back() {

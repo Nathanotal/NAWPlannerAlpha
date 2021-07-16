@@ -6,6 +6,8 @@ import { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { AuthC } from "../auth/auth";
 import colors from "../colors";
+import MinusIcon from "../icons/Minus";
+import PlusIcon from "../icons/Plus";
 
 function Incrementer({ f, style, item }) {
   const [count, setCount] = useState(0);
@@ -42,7 +44,8 @@ function Incrementer({ f, style, item }) {
     <View style={[styles.counterContainer, style]}>
       <TouchableOpacity onPress={plus}>
         <View style={styles.plusContainer}>
-          <Feather name="plus" style={styles.iconIncrement}></Feather>
+          {/* <Feather name="plus" style={styles.iconIncrement}></Feather> */}
+          <PlusIcon size={28}></PlusIcon>
         </View>
       </TouchableOpacity>
       <View style={styles.numberContainer}>
@@ -50,7 +53,8 @@ function Incrementer({ f, style, item }) {
       </View>
       <TouchableOpacity onPress={minus}>
         <View style={styles.minusContainer}>
-          <Feather name="minus" style={styles.iconIncrement}></Feather>
+          <MinusIcon size={28}></MinusIcon>
+          {/* <Feather name="minus" style={styles.iconIncrement}></Feather> */}
         </View>
       </TouchableOpacity>
     </View>

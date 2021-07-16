@@ -19,6 +19,9 @@ import { Feather } from "expo-vector-icons";
 import ChallengeDesc from "../Komponenter/ChallengeDesc";
 import { useContext } from "react";
 import { AuthC } from "../auth/auth";
+import CheckSquareIcon from "../icons/CheckSquareIcon";
+import SquareIcon from "../icons/SquareIcon";
+import PlusSquareIcon from "../icons/PlusSquareIcon";
 
 const validate = Yup.object().shape({
   Email: Yup.string().required().email().label("Email"),
@@ -95,19 +98,28 @@ function EnterPoints(props) {
           <View style={styles.challengeContainer}>
             <Text style={styles.challengeTitle}>{item.title}</Text>
             {!currentUserData.completed.includes(item.id) ? (
-              <Feather name="square" style={styles.challengeCheck}></Feather>
+              // <Feather name="square" style={styles.challengeCheck}></Feather>
+              <div style={{ paddingRight: 20 }}>
+                <SquareIcon size={28}></SquareIcon>
+              </div>
             ) : (
               <>
                 {item.multi ? (
-                  <Feather
-                    name="plus-square"
-                    style={styles.challengeCheck}
-                  ></Feather>
+                  // <Feather
+                  //   name="plus-square"
+                  //   style={styles.challengeCheck}
+                  // ></Feather>
+                  <div style={{ paddingRight: 20 }}>
+                    <PlusSquareIcon size={28}></PlusSquareIcon>
+                  </div>
                 ) : (
-                  <Feather
-                    name="check-square"
-                    style={styles.challengeCheck}
-                  ></Feather>
+                  <div style={{ paddingRight: 20 }}>
+                    <CheckSquareIcon size={28}></CheckSquareIcon>
+                  </div>
+                  // <Feather
+                  //   name="check-square"
+                  //   style={styles.challengeCheck}
+                  // ></Feather>
                 )}
               </>
             )}

@@ -90,7 +90,10 @@ function Login({ navigation }) {
           <View style={styles.buffer}></View>
           <View style={styles.register}>
             <Text style={styles.registerText}>No account?</Text>
-            <Knapp namn="Register" onPress={goToReg}></Knapp>
+            <Knapp
+              namn="Register"
+              onPress={() => console.log("Denna knapp är avstängd")}
+            ></Knapp>
           </View>
         </View>
       )}

@@ -78,7 +78,6 @@ function ChartComponent({ thePoints }) {
             });
 
             // Fill y-values
-
             rawDataList.forEach((dataObj, pIndex) => {
               const max = dataObj.y.length - 1;
 
